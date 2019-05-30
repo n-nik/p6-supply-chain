@@ -12,10 +12,10 @@ contract('SupplyChain', function(accounts) {
     const originManufacturerInformation = "Yarray Valley";
     const productNotes = "Best beans for Espresso";
     const productPrice = web3.toWei(1, "ether");
-    var itemState = 0;
+    var carState = 0;
     const dealerID = accounts[2];
     const consumerID = accounts[3];
-    const emptyAddress = '0x00000000000000000000000000000000000000';
+    const emptyAddress = '0x0000000000000000000000000000000000000000';
 
     ///Available Accounts
     ///==================
@@ -37,7 +37,7 @@ contract('SupplyChain', function(accounts) {
     console.log("Consumer: accounts[3] ", accounts[3]);
 
     // 1st Test
-    it("Testing smart contract function assembleItem() that allows a manufacturer to assemble car", async() => {
+    it("Testing smart contract function assembleCar() that allows a manufacturer to assemble car", async() => {
         const supplyChain = await SupplyChain.deployed();
         
         // Declare and Initialize a variable for event
@@ -50,23 +50,27 @@ contract('SupplyChain', function(accounts) {
         });
 
         // Mark an item as Assembled by calling function assembleItem()
-        await supplyChain.assembleItem(vin, originManufacturerID, originManufacturerName, originManufacturerInformation, productNotes);
+        await supplyChain.assembleCar(vin, originManufacturerID, originManufacturerName, originManufacturerInformation, productNotes, productPrice);
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(vin);
-        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(vin);
+        const resultBuffer = await supplyChain.fetchCarBuffer.call(vin);
+
         // Verify the result set
-        // assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU');
-        assert.equal(resultBufferOne[1], vin, 'Error: Invalid item VIN');
-        assert.equal(resultBufferOne[2], originManufacturerID, 'Error: Missing or Invalid ownerID');
-        assert.equal(resultBufferOne[3], originManufacturerID, 'Error: Missing or Invalid originManufacturerID');
-        assert.equal(resultBufferOne[4], originManufacturerName, 'Error: Missing or Invalid originManufacturerName');
-        assert.equal(resultBufferOne[5], originManufacturerInformation, 'Error: Missing or Invalid originManufacturerInformation');
-        assert.equal(resultBufferTwo[4], 0, 'Error: Invalid item State');
+        assert.equal(resultBuffer[0], sku, 'Error: Invalid item SKU');
+        assert.equal(resultBuffer[1], vin, 'Error: Invalid item VIN');
+        assert.equal(resultBuffer[2], originManufacturerID, 'Error: Missing or Invalid ownerID');
+        assert.equal(resultBuffer[3], originManufacturerID, 'Error: Missing or Invalid originManufacturerID');
+        assert.equal(resultBuffer[4], originManufacturerName, 'Error: Missing or Invalid originManufacturerName');
+        assert.equal(resultBuffer[5], originManufacturerInformation, 'Error: Missing or Invalid originManufacturerInformation');
+        assert.equal(resultBuffer[6], productNotes, 'Error: Missing or Invalid productNotes');
+        assert.equal(resultBuffer[7], productPrice, 'Error: Missing or Invalid productPrice');
+        assert.equal(resultBuffer[8], carState, 'Error: Invalid item State');
+        assert.equal(resultBuffer[9], emptyAddress, 'Error: Invalid dealerID');
+        assert.equal(resultBuffer[10], emptyAddress, 'Error: Invalid consumerID');
         assert.equal(eventEmitted, true, 'Invalid event emitted');
     });
 
-    // 5th Test
+    // 2nd Test
     it("Testing smart contract function buyItem() that allows a dealer to buy cars", async() => {
         const supplyChain = await SupplyChain.deployed();
         
@@ -87,7 +91,7 @@ contract('SupplyChain', function(accounts) {
         
     });
 
-    // 6th Test
+    // 3rd Test
     it("Testing smart contract function shipItem() that allows a manufacturer to ship car", async() => {
         const supplyChain = await SupplyChain.deployed()
         
@@ -107,7 +111,7 @@ contract('SupplyChain', function(accounts) {
               
     });
 
-    // 7th Test
+    // 4th Test
     it("Testing smart contract function receiveItem() that allows a dealer to mark car received", async() => {
         const supplyChain = await SupplyChain.deployed()
         
@@ -127,7 +131,7 @@ contract('SupplyChain', function(accounts) {
              
     });
 
-    // 8th Test
+    // 5th Test
     it("Testing smart contract function purchaseItem() that allows a consumer to purchase car", async() => {
         const supplyChain = await SupplyChain.deployed()
         
@@ -147,19 +151,8 @@ contract('SupplyChain', function(accounts) {
         
     });
 
-    // 9th Test
-    it("Testing smart contract function fetchItemBufferOne() that allows anyone to fetch item details from blockchain", async() => {
-        const supplyChain = await SupplyChain.deployed()
-
-        // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
-        
-        // Verify the result set:
-        
-    });
-
-    // 10th Test
-    it("Testing smart contract function fetchItemBufferTwo() that allows anyone to fetch item details from blockchain", async() => {
+    // 6th Test
+    it("Testing smart contract function fetchItemBuffer() that allows anyone to fetch item details from blockchain", async() => {
         const supplyChain = await SupplyChain.deployed()
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
