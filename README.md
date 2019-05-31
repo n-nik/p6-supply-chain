@@ -89,30 +89,32 @@ npm run dev
 
 ## Deploy to Rinkeby test network information
 ```
+truffle migrate --reset --network rinkeby
+
 Using network 'rinkeby'.
 
 Running migration: 1_initial_migration.js
   Deploying Migrations...
-  ... 0x1eb48921ea05d6f31ca0507e85018b1161d1557cc864a3430916dfa9ef2e1c1e
-  Migrations: 0xb887ee21b3bbfb9c9682c9a6d6f0269893c4262e
+  ... 0x745f5ac05236ffcff53584c6ddb51bbc6e8421d747bb3cebc6ce6844d2f3ef43
+  Migrations: 0xe6f44b592ee08a1483898b33f582e54aca55b33b
 Saving successful migration to network...
-  ... 0x55e85b3b0b4ce15514aa088a044a7e2b33814ac1630bd1b38da76287164d58c1
+  ... 0x5d87c00bf836c0f5c44162ccd66e0bad1cc0189ea30956d9a5201944e226ffe5
 Saving artifacts...
 Running migration: 2_deploy_contracts.js
   Deploying ManufacturerRole...
-  ... 0x68c7a1889fbe403fe6d472086f68d242ba3aba87026382ed3ea00a32ec3bdace
-  ManufacturerRole: 0x71d18ebed264aa208135e0e315f3d8186e5b971a
+  ... 0xb71c5bf38adaf6a9fa1316af8236af38905130d068aa479561f404847f74dccc
+  ManufacturerRole: 0xebef5df4d9f577c019b02ee51684627c6c9131c7
   Deploying DealerRole...
-  ... 0xa22394a7fa94efdfebd08d1f47f4d3391a77bd977837b91c7900b1ca85a7e432
-  DealerRole: 0xea7bc804c8297f1152ee7b468ecb1e284e1fbd14
+  ... 0x5a7319e766bcdf0ff64c98537add21a8c68fd956fbb2abab1e3607eb8313d273
+  DealerRole: 0xab871bc64e34a2a6984eb27c583e1475f8c9116e
   Deploying ConsumerRole...
-  ... 0x587628e6fe9df4f9e0fbf8af95a1db6c9ac9637b74e9e39de31feecb2b42ea07
-  ConsumerRole: 0xfd8aa2e0bde32d3b548606bcc06b6bbea8dc9af9
+  ... 0xac5bd0814ebbb7e82065feb3772ba2a8110ff6b3369f3723109a457f1e228f00
+  ConsumerRole: 0x3d580e5901910ba022ea7234412eec912a93b373
   Deploying SupplyChain...
-  ... 0x1d9bf73c91f6e2eda46e9f9d0336e5b6ee8352336a52e7de29415178ee67bcc4
-  SupplyChain: 0x84ab2521870674f2c6867f0f398c4b04745dd5ce
+  ... 0x2d595bee1fcdf8efd39f44947be7ae91430e92430cb55976c1ef46ca1316fad4
+  SupplyChain: 0xa15f8a43503a8df9b378d3365f1a59d49fdc950a
 Saving successful migration to network...
-  ... 0xf86cf173a6bf3fc7f09a56da3ffde85b6e5cc0f4ccfa6edd4809da2299cf8e03
+  ... 0xb4e18ce0c541336ca52407577c66ebf2532464af9d693ef15962266fb2032064
 Saving artifacts...
 
 ```
