@@ -87,6 +87,16 @@ contract SupplyChain {
     cars[_vin].consumerID.transfer(amountToReturn);
   }
 
+  // Define a modifier that checks if an car was created
+  modifier checkCarExists(uint _vin) {
+    require(cars[_vin].ownerID != address(0));
+    _;
+  }
+  // Define a modifier that checks if an car was created
+  modifier checkCarNotExists(uint _vin) {
+    require(cars[_vin].ownerID == address(0));
+    _;
+  }
   // Define a modifier that checks if an car.state of a vin is Assembled
   modifier assembled(uint _vin) {
     require(cars[_vin].carState == State.Assembled);
@@ -134,7 +144,7 @@ contract SupplyChain {
   }
 
   // Define a function 'assembleCar' that allows a manufacturer to mark an car 'Assembled'
-  function assembleCar(uint _vin, address _originManufacturerID, string _originManufacturerName, string _originManufacturerInformation, string  _productNotes, uint _productPrice) public
+  function assembleCar(uint _vin, address _originManufacturerID, string _originManufacturerName, string _originManufacturerInformation, string  _productNotes, uint _productPrice) checkCarNotExists(_vin) public
   {
     Car memory car;
     car.vin = _vin;
@@ -160,7 +170,7 @@ contract SupplyChain {
   }
 
   // Define a function 'buyCar' that allows a dealer to mark an car 'SoldForDealer'
-  function buyCar(uint _vin) assembled(_vin) paidEnough(_vin) checkValueForDealer(_vin) public payable
+  function buyCar(uint _vin) assembled(_vin) checkCarExists(_vin) paidEnough(_vin) checkValueForDealer(_vin) public payable
   {
     // Update the appropriate fields
     cars[_vin].carState = State.SoldForDealer;
@@ -175,7 +185,7 @@ contract SupplyChain {
 
   // Define a function 'shipCar' that allows the manufacturer to mark an car 'Shipped'
   // Use the above modifiers to check if the car is sold
-  function shipCar(uint _vin) soldForDealer(_vin) public
+  function shipCar(uint _vin) checkCarExists(_vin) soldForDealer(_vin) public
     
     {
       // Update the appropriate fields
@@ -187,7 +197,7 @@ contract SupplyChain {
 
   // Define a function 'receiveCar' that allows the dealer to mark an car 'Received'
   // Use the above modifiers to check if the car is shipped
-  function receiveCar(uint _vin) shipped(_vin) public
+  function receiveCar(uint _vin) checkCarExists(_vin) shipped(_vin) public
     {
       // Update the appropriate fields
       cars[_vin].carState = State.Received;
@@ -199,7 +209,7 @@ contract SupplyChain {
 
   // Define a function 'purchaseCar' that allows the consumer to mark an car 'Purchased'
   // Use the above modifiers to check if the car is received
-  function purchaseCar(uint _vin) received(_vin) paidEnough(_vin) checkValueForConsumer(_vin) public payable
+  function purchaseCar(uint _vin) checkCarExists(_vin) received(_vin) paidEnough(_vin) checkValueForConsumer(_vin) public payable
     {
       // Update the appropriate fields
       cars[_vin].carState = State.Purchased;

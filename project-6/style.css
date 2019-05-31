@@ -13,6 +13,9 @@ body {
 .bold { 
   font-weight: bolder;
 }
+#car-info-block {
+    overflow: auto;
+}
 
 input {
     width: 80%;
