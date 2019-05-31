@@ -160,7 +160,7 @@ contract SupplyChain {
   }
 
   // Define a function 'buyCar' that allows a dealer to mark an car 'SoldForDealer'
-  function buyCar(uint _vin) assembled paidEnough checkValueForDealer public payable
+  function buyCar(uint _vin) assembled(_vin) paidEnough(_vin) checkValueForDealer(_vin) public payable
   {
     // Update the appropriate fields
     cars[_vin].carState = State.SoldForDealer;
@@ -175,19 +175,19 @@ contract SupplyChain {
 
   // Define a function 'shipCar' that allows the manufacturer to mark an car 'Shipped'
   // Use the above modifiers to check if the car is sold
-  function shipCar(uint _vin) soldForDealer public
+  function shipCar(uint _vin) soldForDealer(_vin) public
     
     {
       // Update the appropriate fields
       cars[_vin].carState = State.Shipped;
 
       // Emit the appropriate event
-      emit SoldForDealer(_vin);
+      emit Shipped(_vin);
   }
 
   // Define a function 'receiveCar' that allows the dealer to mark an car 'Received'
   // Use the above modifiers to check if the car is shipped
-  function receiveCar(uint _vin) shipped public
+  function receiveCar(uint _vin) shipped(_vin) public
     {
       // Update the appropriate fields
       cars[_vin].carState = State.Received;
@@ -199,7 +199,7 @@ contract SupplyChain {
 
   // Define a function 'purchaseCar' that allows the consumer to mark an car 'Purchased'
   // Use the above modifiers to check if the car is received
-  function purchaseCar(uint _vin) received(vin) paidEnough checkValueForConsumer public payable
+  function purchaseCar(uint _vin) received(_vin) paidEnough(_vin) checkValueForConsumer(_vin) public payable
     {
       // Update the appropriate fields
       cars[_vin].carState = State.Purchased;
